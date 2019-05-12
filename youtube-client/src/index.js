@@ -1,7 +1,5 @@
 import App from './controllers/App';
-import Model from './models/Model';
-import AppView from './views/AppView';
 
-const app = new App(Model, AppView);
+const app = new App('YouTube Client', 'AIzaSyCyTlxe2_bua2qs_ENJtwkQSXddquZAVvg', 15);
 
 app.start();
