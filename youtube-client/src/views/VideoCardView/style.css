@@ -1,0 +1,69 @@
+.video-card {
+  width: 35vh;
+  height: 60vh;
+  background-color: #f9f9f9;
+  box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 24px;
+  border-radius: 2vh;
+  overflow: hidden;
+  padding: 10px;
+  display: inline-block;
+  color: #000000;
+  text-decoration: none;
+}
+
+.video-card__img {
+  width: calc(100% + 20px);
+  margin: -10px;
+}
+
+.video-card__heading {
+  font-size: 20px;
+  margin: 0;
+  padding: 20px 0 20px 0;
+  border-bottom: #cecece 1px solid;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-card__info {
+  margin: 0;
+  padding: 20px 0 20px 0;
+  border-bottom: #cecece 1px solid;
+}
+
+.video-card__channel {
+  font-size: 16px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.video-card__date {
+  font-size: 12px;
+}
+
+.video-card__views {
+  font-size: 12px;
+  float: right;
+}
+
+.video-card__views::after {
+  content: "👁";
+  margin-left: 1vh;
+  vertical-align: middle;
+}
+
+.video-card__description {
+  font-size: 14px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+}
