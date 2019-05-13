@@ -1,5 +1,6 @@
 import AppView from '../views/AppView';
 import SliderView from '../views/SliderView';
+import SliderControlsView from '../views/SliderControlsView';
 import VideoCardView from '../views/VideoCardView';
 
 import AppModel from '../models/Model';
@@ -40,6 +41,12 @@ export default class App {
     if (!slider) {
       slider = new SliderView(this.state.numberOfPages);
       slider.render();
+    }
+
+    let sliderControls = document.getElementById('slider-controls');
+    if (!sliderControls) {
+      sliderControls = new SliderControlsView(this.state.numberOfPages);
+      sliderControls.render(1);
     }
 
     dataChunk.forEach((video) => {
