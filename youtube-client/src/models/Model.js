@@ -22,7 +22,7 @@ export default class AppModel {
     const dataChunk = items.map(item => ({
       title: item.snippet.title,
       thumbnail: item.snippet.thumbnails.medium.url,
-      desciption: item.snippet.description,
+      description: item.snippet.description,
       channel: item.snippet.channelTitle,
       date: item.snippet.publishedAt.substring(0, 10),
       views: item.statistics.viewCount,
