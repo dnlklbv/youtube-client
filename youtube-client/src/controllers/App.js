@@ -1,4 +1,5 @@
 import AppView from '../views/AppView';
+import SliderView from '../views/SliderView';
 import VideoCardView from '../views/VideoCardView';
 
 import AppModel from '../models/Model';
@@ -11,6 +12,7 @@ export default class App {
       apiKey,
       chunkSize,
       nextChunkToken: null,
+      numberOfPages: 1,
     };
   }
 
@@ -33,6 +35,13 @@ export default class App {
     this.state.nextChunkToken = null;
 
     const dataChunk = await this.getDataChunk();
+
+    let slider = document.getElementById('slider');
+    if (!slider) {
+      slider = new SliderView(this.state.numberOfPages);
+      slider.render();
+    }
+
     dataChunk.forEach((video) => {
       const videoCard = new VideoCardView(video);
       videoCard.render();

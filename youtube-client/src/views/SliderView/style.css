@@ -1,0 +1,11 @@
+.slider {
+  --numOfPages: 1;
+  display: flex;
+  align-items: center;
+  overflow-y: hidden;
+  width: 100vw;
+  width: calc(var(--numOfPages)*100vw);
+  transform: translate(calc(var(--tx, 0px) + var(--pageNum, 0)/var(--numOfPages)*-100%));
+}
+
+.slider_smooth { transition: transform .5s ease-out; }
