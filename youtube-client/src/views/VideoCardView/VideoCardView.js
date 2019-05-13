@@ -4,16 +4,19 @@ export default class VideoCardView {
   }
 
   render() {
-    const videoCard = document.createElement('a');
+    const videoCard = document.createElement('div');
     videoCard.classList.add('video-card');
-    videoCard.href = this.videoData.link;
-    videoCard.target = '_blank';
+
+    const videoLink = document.createElement('a');
+    videoLink.href = this.videoData.link;
+    videoLink.target = '_blank';
 
     const videoThumbnail = document.createElement('img');
     videoThumbnail.classList.add('video-card__img');
     videoThumbnail.src = this.videoData.thumbnail;
     videoThumbnail.alt = this.videoData.title;
-    videoCard.appendChild(videoThumbnail);
+    videoLink.appendChild(videoThumbnail);
+    videoCard.appendChild(videoLink);
 
     const videoTitle = document.createElement('h2');
     videoTitle.classList.add('video-card__heading');
@@ -26,8 +29,8 @@ export default class VideoCardView {
 
     const videoChannel = document.createElement('span');
     videoChannel.classList.add('video-card__channel');
-    videoChannel.title = this.videoData.title;
-    videoChannel.innerText = this.videoData.title;
+    videoChannel.title = this.videoData.channel;
+    videoChannel.innerText = this.videoData.channel;
     videoStats.appendChild(videoChannel);
 
     const videoDate = document.createElement('span');
