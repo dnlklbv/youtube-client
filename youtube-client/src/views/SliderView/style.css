@@ -2,6 +2,8 @@
   --numOfPages: 1;
   display: flex;
   align-items: center;
+  justify-content: space-around;
+  padding: 30px 0;
   overflow-y: hidden;
   width: 100vw;
   width: calc(var(--numOfPages)*100vw);
