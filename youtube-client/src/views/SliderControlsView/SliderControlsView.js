@@ -10,15 +10,18 @@ export default class SliderControlsView {
 
     const buttonPrev = document.createElement('button');
     buttonPrev.classList.add('slider-controls__button', 'slider-controls__button_prev');
+    buttonPrev.id = 'button-prev';
     sliderControls.appendChild(buttonPrev);
 
     const pageNum = document.createElement('div');
     pageNum.classList.add('slider-controls__page-num');
     pageNum.innerText = this.currPage;
+    pageNum.id = 'pageMarker';
     sliderControls.appendChild(pageNum);
 
     const buttonNext = document.createElement('button');
     buttonNext.classList.add('slider-controls__button', 'slider-controls__button_next');
+    buttonNext.id = 'button-next';
     sliderControls.appendChild(buttonNext);
 
     const container = document.getElementById('container');
