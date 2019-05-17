@@ -24,6 +24,12 @@ export default class SliderControlsView {
     buttonNext.id = 'button-next';
     sliderControls.appendChild(buttonNext);
 
+    const tooltipPrev = document.createElement('div');
+    tooltipPrev.classList.add('slider-controls__tooltip');
+    buttonPrev.append(tooltipPrev);
+    const tooltipNext = tooltipPrev.cloneNode();
+    buttonNext.appendChild(tooltipNext);
+
     const container = document.getElementById('container');
     container.appendChild(sliderControls);
   }

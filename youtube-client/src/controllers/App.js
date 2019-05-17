@@ -180,6 +180,21 @@ export default class App {
 
   updatePageMarker() {
     const pageMarker = document.getElementById('pageMarker');
+    const tooltips = document.querySelectorAll('.slider-controls__tooltip');
     pageMarker.innerHTML = this.state.slider.currPage + 1;
+
+    if (this.state.slider.currPage === 0) {
+      tooltips[0].classList.toggle('visually-hidden', true);
+    } else {
+      tooltips[0].classList.toggle('visually-hidden', false);
+      tooltips[0].innerHTML = this.state.slider.currPage;
+    }
+
+    if (this.state.slider.currPage === Math.floor(this.state.slider.numOfPages)) {
+      tooltips[1].classList.toggle('visually-hidden', true);
+    } else {
+      tooltips[1].classList.toggle('visually-hidden', false);
+      tooltips[1].innerHTML = this.state.slider.currPage + 2;
+    }
   }
 }
