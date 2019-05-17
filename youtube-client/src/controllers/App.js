@@ -14,6 +14,11 @@ export default class App {
       chunkSize,
       nextChunkToken: null,
       numberOfPages: 1,
+      slider: {
+        elementPerPage: 0,
+        numOfPages: 0,
+        currPage: 0,
+      },
     };
   }
 
@@ -22,10 +27,10 @@ export default class App {
     appView.render();
 
     const searchBox = document.getElementById('search-box');
-    searchBox.addEventListener('keypress', this.handleRequest.bind(this));
+    searchBox.addEventListener('keypress', this.newRequest.bind(this));
   }
 
-  async handleRequest(event) {
+  newRequest(event) {
     if (event.keyCode !== 13) return;
     let { value } = event.target;
     if (value.length < 1) return;
@@ -35,22 +40,27 @@ export default class App {
     this.state.request = value;
     this.state.nextChunkToken = null;
 
+    const slider = document.getElementById('slider');
+    if (slider) {
+      while (slider.lastChild) {
+        slider.removeChild(slider.lastChild);
+      }
+      slider.style.setProperty('--pageNum', this.state.slider.currPage = 0);
+    }
+
+    this.handleRequest();
+  }
+
+  async handleRequest() {
     const dataChunk = await this.getDataChunk();
 
     let slider = document.getElementById('slider');
     if (!slider) {
       slider = new SliderView(this.state.numberOfPages);
       slider.render();
-    } else {
-      while (slider.firstChild) {
-        slider.removeChild(slider.firstChild);
-      }
-    }
-
-    let sliderControls = document.getElementById('slider-controls');
-    if (!sliderControls) {
-      sliderControls = new SliderControlsView(this.state.numberOfPages);
+      const sliderControls = new SliderControlsView(this.state.numberOfPages);
       sliderControls.render(1);
+      this.initSlider();
     }
 
     dataChunk.forEach((video) => {
@@ -58,7 +68,8 @@ export default class App {
       videoCard.render();
     });
 
-    App.initSlider();
+    this.updateSliderState();
+    this.updatePageMarker();
   }
 
   async getDataChunk() {
@@ -68,84 +79,84 @@ export default class App {
     return dataChunk;
   }
 
-  static initSlider() {
+  initSlider() {
     const slider = document.getElementById('slider');
     const btnPrev = document.getElementById('button-prev');
     const btnNext = document.getElementById('button-next');
-    const pageMarker = document.getElementById('pageMarker');
 
     const windowWidth = window.outerWidth;
 
-    let elementPerPage;
-    if (windowWidth > 1200) { elementPerPage = 4; } else
-    if (windowWidth > 600) { elementPerPage = 2; } else { elementPerPage = 1; }
+    if (windowWidth > 1200) {
+      this.state.slider.elementPerPage = 4;
+    } else
+    if (windowWidth > 600) {
+      this.state.slider.elementPerPage = 2;
+    } else {
+      this.state.slider.elementPerPage = 1;
+    }
 
-    const numOfElements = slider.children.length;
-    const numOfPages = numOfElements / elementPerPage;
-    let pageNum = 0;
     let x0 = null;
     let locked = false;
+    this.state.slider.currPage = 0;
 
-    function updatePageMarker(n) {
-      pageMarker.innerHTML = n + 1;
-    }
+    const prevPage = () => {
+      if (this.state.slider.currPage === 0) return;
+      slider.classList.add('slider_smooth');
+      slider.style.setProperty('--pageNum', this.state.slider.currPage -= 1);
+      this.updatePageMarker();
+      setTimeout(() => {
+        slider.classList.remove('slider_smooth');
+      }, parseFloat(getComputedStyle(slider).transitionDuration) * 1000);
+    };
 
-    function unify(e) { return e.changedTouches ? e.changedTouches[0] : e; }
+    const nextPage = () => {
+      if (this.state.slider.currPage === Math.round(this.state.slider.numOfPages) - 3) {
+        this.handleRequest(true);
+      } else if (this.state.slider.currPage >= Math.round(this.state.slider.numOfPages) - 1) return;
+      slider.classList.add('slider_smooth');
+      slider.style.setProperty('--pageNum', this.state.slider.currPage += 1);
+      this.updatePageMarker();
+      setTimeout(() => {
+        slider.classList.remove('slider_smooth');
+      }, parseFloat(getComputedStyle(slider).transitionDuration) * 1000);
+    };
 
-    function lock(e) {
+    const unify = e => (e.changedTouches ? e.changedTouches[0] : e);
+
+    const lock = (e) => {
       x0 = unify(e).clientX;
       slider.classList.toggle('slider_smooth', !(locked = true));
-    }
+    };
 
-    function drag(e) {
+    const drag = (e) => {
       e.preventDefault();
 
       if (locked) { slider.style.setProperty('--tx', `${Math.round(unify(e).clientX - x0)}px`); }
-    }
+    };
 
-    function move(e) {
+    const move = (e) => {
       if (locked) {
         const dx = unify(e).clientX - x0;
         const minDx = document.body.clientWidth * 0.1;
-        let s;
+        let sign;
         if (minDx > Math.abs(dx)) {
-          s = 0;
+          sign = 0;
         } else {
-          s = Math.sign(dx);
+          sign = Math.sign(dx);
         }
 
-
-        if ((pageNum > 0 || s < 0) && (pageNum < numOfPages - 1 || s > 0)) {
-          slider.style.setProperty('--pageNum', pageNum -= s);
-          updatePageMarker(pageNum);
+        if (this.state.slider.currPage > 0 && sign === 1) {
+          prevPage();
+        } else if (this.state.slider.currPage < this.state.slider.numOfPages - 1 && sign === -1) {
+          nextPage();
         }
+
+        this.updatePageMarker();
         slider.style.setProperty('--tx', '0px');
         slider.classList.toggle('slider_smooth', !(locked = false));
         x0 = null;
       }
-    }
-
-    function prevPage() {
-      if (pageNum < 1) return;
-      slider.classList.add('slider_smooth');
-      slider.style.setProperty('--pageNum', pageNum -= 1);
-      updatePageMarker(pageNum);
-      setTimeout(() => {
-        slider.classList.remove('slider_smooth');
-      }, parseFloat(getComputedStyle(slider).transitionDuration) * 1000);
-    }
-
-    function nextPage() {
-      if (pageNum > numOfPages - 2) return;
-      slider.classList.add('slider_smooth');
-      slider.style.setProperty('--pageNum', pageNum += 1);
-      updatePageMarker(pageNum);
-      setTimeout(() => {
-        slider.classList.remove('slider_smooth');
-      }, parseFloat(getComputedStyle(slider).transitionDuration) * 1000);
-    }
-
-    slider.style.setProperty('--numOfPages', numOfPages);
+    };
 
     slider.addEventListener('mousedown', lock, false);
     slider.addEventListener('touchstart', lock, false);
@@ -158,5 +169,17 @@ export default class App {
 
     btnPrev.addEventListener('click', prevPage);
     btnNext.addEventListener('click', nextPage);
+  }
+
+  updateSliderState() {
+    const slider = document.getElementById('slider');
+    const numOfElements = slider.children.length;
+    this.state.slider.numOfPages = numOfElements / this.state.slider.elementPerPage;
+    slider.style.setProperty('--numOfPages', this.state.slider.numOfPages);
+  }
+
+  updatePageMarker() {
+    const pageMarker = document.getElementById('pageMarker');
+    pageMarker.innerHTML = this.state.slider.currPage + 1;
   }
 }
