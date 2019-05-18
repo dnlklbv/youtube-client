@@ -13,7 +13,6 @@ export default class App {
       apiKey,
       chunkSize,
       nextChunkToken: null,
-      numberOfPages: 1,
       slider: {
         elementPerPage: 0,
         numOfPages: 0,
@@ -56,10 +55,10 @@ export default class App {
 
     let slider = document.getElementById('slider');
     if (!slider) {
-      slider = new SliderView(this.state.numberOfPages);
+      slider = new SliderView(this.state.slider.numOfPages);
       slider.render();
-      const sliderControls = new SliderControlsView(this.state.numberOfPages);
-      sliderControls.render(1);
+      const sliderControls = new SliderControlsView(this.state.slider.currPage);
+      sliderControls.render();
       this.initSlider();
     }
 
