@@ -1,6 +1,6 @@
 .video-card {
   width: 35vh;
-  height: 60vh;
+  height: 55vh;
   background-color: #f9f9f9;
   box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 24px;
   border-radius: 2vh;
@@ -17,9 +17,9 @@
 }
 
 .video-card__heading {
-  font-size: 20px;
+  font-size: 1.5rem;
   margin: 0;
-  padding: 20px 0 20px 0;
+  padding: 1.5vh 0 1vh 0;
   border-bottom: #cecece 1px solid;
   font-weight: 700;
   white-space: nowrap;
@@ -29,37 +29,37 @@
 
 .video-card__info {
   margin: 0;
-  padding: 20px 0 20px 0;
+  padding: 1.5vh 0 1.5vh 0;
   border-bottom: #cecece 1px solid;
 }
 
 .video-card__channel {
-  font-size: 16px;
+  font-size: 1.2rem;
   font-weight: 600;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 1vh;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .video-card__date {
-  font-size: 12px;
+  font-size: 1rem;
 }
 
 .video-card__views {
-  font-size: 12px;
+  font-size: 1rem;
   float: right;
 }
 
 .video-card__views::after {
   content: "👁";
-  margin-left: 1vh;
+  margin-left: 1.5vh;
   vertical-align: middle;
 }
 
 .video-card__description {
-  font-size: 14px;
+  font-size: 1rem;
   text-overflow: ellipsis;
   overflow: hidden;
 
