@@ -7,21 +7,18 @@ export default class VideoCardView {
     const videoCard = document.createElement('div');
     videoCard.classList.add('video-card');
 
-    const videoLink = document.createElement('a');
-    videoLink.href = this.videoData.link;
-    videoLink.target = '_blank';
-
     const videoThumbnail = document.createElement('img');
     videoThumbnail.classList.add('video-card__img');
     videoThumbnail.src = this.videoData.thumbnail;
     videoThumbnail.alt = this.videoData.title;
-    videoLink.appendChild(videoThumbnail);
-    videoCard.appendChild(videoLink);
+    videoCard.appendChild(videoThumbnail);
 
-    const videoTitle = document.createElement('h2');
-    videoTitle.classList.add('video-card__heading');
+    const videoTitle = document.createElement('a');
+    videoTitle.classList.add('video-card__title');
     videoTitle.title = this.videoData.title;
     videoTitle.innerText = this.videoData.title;
+    videoTitle.href = this.videoData.link;
+    videoTitle.target = '_blank';
     videoCard.appendChild(videoTitle);
 
     const videoStats = document.createElement('p');

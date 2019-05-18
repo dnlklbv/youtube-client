@@ -16,8 +16,11 @@
   margin: -10px;
 }
 
-.video-card__heading {
+.video-card__title {
+  display: block;
   font-size: 1.5rem;
+  color: #000000;
+  text-decoration: none;
   margin: 0;
   padding: 1.5vh 0 1vh 0;
   border-bottom: #cecece 1px solid;
@@ -25,6 +28,10 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.video-card__title:hover {
+  text-decoration: underline;
 }
 
 .video-card__info {
