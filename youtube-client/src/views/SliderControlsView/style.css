@@ -4,26 +4,27 @@
 }
 
 .slider-controls__button {
-  width: 50px;
+  width: 10vh;
   height: 0;
+  padding: 0;
   display: inline-block;
   cursor: pointer;
   position: relative;
 }
 
 .slider-controls__button_prev {
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
+  border-top: 2vh solid #ffffff;
+  border-bottom: 2vh solid #ffffff;
 
-  border-right:10px solid #cecece;
+  border-right: 2vh solid #cecece;
   border-left: 0;
 }
 
 .slider-controls__button_next {
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
+  border-top: 2vh solid #ffffff;
+  border-bottom: 2vh solid #ffffff;
 
-  border-left: 10px solid #cecece;
+  border-left: 2vh solid #cecece;
   border-right: 0;
 }
 
@@ -33,29 +34,31 @@
 
 .slider-controls__tooltip{
   visibility: hidden;
-  width: 25px;
+  width: 4vh;
   background-color: #333333;
   color: #ffffff;
   text-align: center;
-  padding: 4px 0;
-  border-radius: 6px;
+  font-size: 1rem;
+  padding: 1vh 0;
+  border-radius: 1vh;
 
   position: absolute;
   left: 50%;
   top: 0;
-  transform: translateX(-50%) translateY(-45%);
+  transform: translateX(-50%) translateY(-50%);
 }
 
 .slider-controls__page-num {
   background-color: #333333;
   color: #ffffff;
-  width: 25px;
-  height: 25px;
+  width: 4vh;
+  height: 4vh;
   display: inline-block;
   text-align: center;
+  font-size: 1.5rem;
   border-radius: 100%;
-  margin: 0 10px;
-  line-height: 25px;
+  margin: 0 2vh;
+  line-height: 4vh;
 }
 
 .visually-hidden {
