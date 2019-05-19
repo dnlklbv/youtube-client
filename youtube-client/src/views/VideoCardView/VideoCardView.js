@@ -32,12 +32,12 @@ export default class VideoCardView {
 
     const videoDate = document.createElement('span');
     videoDate.classList.add('video-card__date');
-    videoDate.innerHTML = this.videoData.date;
+    videoDate.innerHTML = this.videoData.date.replace(/-/g, ' ');
     videoStats.appendChild(videoDate);
 
     const videoViews = document.createElement('span');
     videoViews.classList.add('video-card__views');
-    videoViews.innerText = this.videoData.views;
+    videoViews.innerText = this.videoData.views.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     videoStats.appendChild(videoViews);
 
     videoCard.appendChild(videoStats);
