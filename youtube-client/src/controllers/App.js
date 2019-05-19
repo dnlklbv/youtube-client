@@ -109,15 +109,16 @@ export default class App {
     };
 
     const nextPage = () => {
-      if (this.state.slider.currPage === Math.round(this.state.slider.numOfPages) - 3) {
-        this.handleRequest(true);
-      } else if (this.state.slider.currPage >= Math.round(this.state.slider.numOfPages) - 1) return;
+      if (this.state.slider.currPage + 1 >= Math.ceil(this.state.slider.numOfPages)) return;
       slider.classList.add('slider_smooth');
       slider.style.setProperty('--pageNum', this.state.slider.currPage += 1);
       this.updatePageMarker();
       setTimeout(() => {
         slider.classList.remove('slider_smooth');
       }, parseFloat(getComputedStyle(slider).transitionDuration) * 1000);
+      if (this.state.slider.currPage + 2 === Math.ceil(this.state.slider.numOfPages)) {
+        this.handleRequest(true);
+      }
     };
 
     const unify = e => (e.changedTouches ? e.changedTouches[0] : e);
@@ -189,7 +190,7 @@ export default class App {
       tooltips[0].innerHTML = this.state.slider.currPage;
     }
 
-    if (this.state.slider.currPage === Math.floor(this.state.slider.numOfPages)) {
+    if (this.state.slider.currPage + 1 >= Math.ceil(this.state.slider.numOfPages)) {
       tooltips[1].classList.toggle('visually-hidden', true);
     } else {
       tooltips[1].classList.toggle('visually-hidden', false);
