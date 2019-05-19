@@ -117,7 +117,7 @@ export default class App {
         slider.classList.remove('slider_smooth');
       }, parseFloat(getComputedStyle(slider).transitionDuration) * 1000);
       if (this.state.slider.currPage + 2 === Math.ceil(this.state.slider.numOfPages)) {
-        this.handleRequest(true);
+        this.handleRequest();
       }
     };
 
